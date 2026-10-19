@@ -39,7 +39,7 @@ p{margin:0}
 .nmt{font:600 1.2rem var(--disp)}
 .home .nmt{font-size:1.45rem}
 .chip{display:inline-block;margin-top:3px;font:600 .7rem var(--body);letter-spacing:.1em;color:var(--purple)}
-.cta{font:600 .92rem var(--body);background:var(--purple);color:#fff;border:0;border-radius:999px;padding:.62em 1.25em;cursor:pointer}
+.cta{display:inline-block;text-decoration:none;font:600 .92rem var(--body);background:var(--purple);color:#fff;border:0;border-radius:999px;padding:.62em 1.25em;cursor:pointer}
 :root[data-theme="dark"] .cta{color:#17131F}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cta{color:#17131F}}
 .cta:hover{filter:brightness(1.08)}
@@ -48,7 +48,7 @@ p{margin:0}
 /* home */
 .hint{text-align:center;color:var(--muted);font:500 .85rem var(--body);margin-top:2px}
 /* always-on identity switcher */
-.idnav{position:sticky;top:0;z-index:30;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:10px 2px;margin:8px -2px 0;background:linear-gradient(var(--bg) 82%,transparent)}
+.idnav{position:sticky;top:0;z-index:30;display:flex;flex-wrap:wrap;gap:8px;padding:10px 2px;margin:8px -2px 0;background:linear-gradient(var(--bg) 82%,transparent)}
 .idnav::-webkit-scrollbar{display:none}
 .idnav a{flex:none;font:600 .82rem var(--body);text-decoration:none;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:.5em .95em;white-space:nowrap}
 .idnav a:hover{border-color:var(--purple);color:var(--purple)}
@@ -183,6 +183,47 @@ p{margin:0}
   .top{gap:10px 12px}
   .top{padding:14px 16px}
 }
+/* phone: full-bleed cards, two-row identity tabs */
+@media (max-width:699px){
+  body{padding-inline:0}
+  .top{margin:8px 12px 0}
+  .idnav{position:static;justify-content:center;gap:6px;padding:12px;margin:0;background:none}
+  .idnav a{flex:0 0 calc(25% - 5px);display:flex;align-items:center;justify-content:center;text-align:center;white-space:normal;font-size:.8rem;line-height:1.15;padding:.55em .3em;min-height:46px;border-radius:14px}
+  .stage>*:not(.carousel):not(.next){padding-inline:16px}
+  .stage>.next{margin-inline:16px}
+  .track,.card{border-radius:0}
+  .card{box-shadow:none}
+  .home-main{padding-inline:16px}
+}
+/* laptop and desktop: callout on the left, card sized to the window so everything above Read more fits */
+@media (min-width:1100px){
+  body{padding-block:16px 40px}
+  .wrap{max-width:1260px;display:grid;grid-template-columns:290px minmax(0,1fr);column-gap:36px;align-items:start}
+  .wrap>.top{grid-column:1;grid-row:1/span 3;position:sticky;top:16px;margin-top:0;flex-direction:column;align-items:stretch;gap:14px;padding:22px}
+  .wrap>.top .who{margin-right:0}
+  .wrap>.top .cta{text-align:center}
+  .wrap>.top .cintro{padding-top:14px;font-size:1rem;margin:0}
+  .wrap>.idnav a{padding:.45em .8em;font-size:.8rem}
+  .wrap>.idnav{grid-column:2;grid-row:1;gap:6px;margin:0;padding:0 0 8px;justify-content:flex-start;position:static;background:none}
+  .wrap>.stage,.wrap>main{grid-column:2;grid-row:2}
+  .wrap>*{min-width:0}
+  .wrap>.stage,.wrap>main{margin:0;width:100%}
+  .carousel{min-width:0}
+  :root{--ms:clamp(340px,calc(100vh - 285px),600px)}
+  .stage{max-width:none;padding-top:0}
+  .back{margin-bottom:0}
+  .ttl{font-size:1.7rem}
+  .rate{margin:2px 0 10px}
+  .card{display:grid;grid-template-columns:var(--ms) minmax(0,1fr)}
+  .media{aspect-ratio:auto;width:var(--ms);height:var(--ms)}
+  .cbody{align-self:center;padding:28px 30px}
+  .card h2{font-size:1.55rem}
+  .card .hook{font-size:1.05rem;margin-top:12px}
+  .navrow{right:auto;width:var(--ms);height:var(--ms);aspect-ratio:auto}
+  .ctl{margin-top:10px}
+  .wrap>main.home-main .intro{margin-top:0;max-width:60ch}
+  .chartbox{max-width:max(380px,min(600px,calc((100vh - 280px)*1.08)))}
+}
 </style>
 <div id="app"></div>
 <div id="bar"></div>
@@ -241,7 +282,7 @@ function radarBig(){
 /* header */
 function header(i){
   var home=i<0;
-  return '<header class="top'+(home?' home':'')+'"><a class="who" href="#home" aria-label="Caroline Syu, home"><img class="av" src="'+IM.head+'" alt="Caroline Syu"><span class="nm"><span class="nmt">'+esc(D.name)+'</span>'+'</span></a><button class="cta" id="cta" type="button">Contact me</button>'+(home?'':'<p class="cintro">'+esc(D.intro)+'</p>')+'</header>';
+  return '<header class="top'+(home?' home':'')+'"><a class="who" href="#home" aria-label="Caroline Syu, home"><img class="av" src="'+IM.head+'" alt="Caroline Syu"><span class="nm"><span class="nmt">'+esc(D.name)+'</span>'+'</span></a><a class="cta" id="cta" href="'+esc(D.linkedin)+'" target="_blank" rel="noopener">Contact me</a>'+(home?'':'<p class="cintro">'+esc(D.intro)+'</p>')+'</header>';
 }
 function navHtml(i){
   var h='<nav class="idnav" aria-label="Switch identity">';
@@ -282,7 +323,7 @@ function pageHtml(i){
   return h;
 }
 function homeHtml(){
-  var h='<main><p class="intro">'+(editing?ed('intro',D.intro,'span'):esc(D.intro))+'</p><div class="chartbox">'+radarBig()+'</div><p class="hint">Tap any point on the chart to meet one.</p>';
+  var h='<main class="home-main"><p class="intro">'+(editing?ed('intro',D.intro,'span'):esc(D.intro))+'</p><div class="chartbox">'+radarBig()+'</div><p class="hint">Tap any point on the chart to meet one.</p>';
   if(editing){h+='<div class="ratings"><span>Ratings (1 to 5):</span>';D.ids.forEach(function(x,i){h+='<label>'+esc(x.label)+' <input type="number" min="1" max="5" step="1" value="'+x.rating+'" data-rate="'+i+'"></label>'});h+='</div>'}
   return h+'</main>';
 }
@@ -297,7 +338,6 @@ function render(){
   wire();renderBar();var nv=q('.idnav'),ac=q('.idnav a[aria-current]');if(nv&&ac)nv.scrollLeft=ac.offsetLeft-(nv.clientWidth-ac.offsetWidth)/2;
 }
 function wire(){
-  var cta=q('#cta');if(cta)cta.onclick=openContact;
   var tr=q('.track');
   if(tr){
     var dots=qa('.dots button'),prev=q('#prev'),next=q('#next'),cnt=q('.count');
