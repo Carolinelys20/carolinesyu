@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Caroline Syu</title>
+<title>Ni Hao, this is Caroline Syu</title>
 <meta name="robots" content="noindex, nofollow, noarchive">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Figtree:wght@400;500;600&display=swap">
@@ -376,7 +376,7 @@ function render(){
   cur=i;
   document.documentElement.classList.toggle('editing',editing);
   app.innerHTML='<div class="wrap">'+header(i)+(i<0?homeHtml():navHtml(i)+pageHtml(i))+'</div>';
-  document.title=i<0?'Caroline Syu':D.ids[i].label+' · Caroline Syu';
+  document.title='Ni Hao, this is Caroline Syu';
   wire();renderBar();var nv=q('.idnav'),ac=q('.idnav a[aria-current]');if(nv&&ac)nv.scrollLeft=ac.offsetLeft-(nv.clientWidth-ac.offsetWidth)/2;
 }
 function wire(){
@@ -430,7 +430,7 @@ function buildDoc(){
   var I={};Object.keys(used).forEach(function(k){if(IM[k])I[k]=IM[k]});
   var js=function(o){return JSON.stringify(o).replace(/</g,'\\u003c')};
   return '<!doctype html><html><head><meta charset=utf8><meta name=robots content="noindex,nofollow,noarchive"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>'+RESET+'</style></head><body>'+
-   '<title>Caroline Syu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="'+FONTS+'">\n<style id="sty">'+q('#sty').textContent+'</style>\n<div id="app"></div>\n<div id="bar"></div>\n'+
+   '<title>Ni Hao, this is Caroline Syu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="'+FONTS+'">\n<style id="sty">'+q('#sty').textContent+'</style>\n<div id="app"></div>\n<div id="bar"></div>\n'+
    '<script id="data" type="application/json">'+js(D)+'</scr'+'ipt>\n<script id="imgs" type="application/json">'+js(I)+'</scr'+'ipt>\n<script id="code">'+q('#code').textContent+'</scr'+'ipt></body></html>';
 }
 function renderBar(){
